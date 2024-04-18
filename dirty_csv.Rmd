@@ -1,0 +1,73 @@
+---
+title: "Reading ELAN csv's in R"
+author: "Jasper van Egeraat"
+date: "2024-04-18"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+I had an ELAN file which I initially read in using `readr::read_delim()`. This only partially read in the data, without giving warnings that it didn't return the complete dataset. It returned about 2k rows, while the file consisted of nearly 30k rows. Only after using another package to read in the file I realized I was initially missing a lot of rows. 
+
+The thing that was causing this issue is that the ELAN csv I got had an extra quote `"` in one of its values. `readr` apparently does not know how to deal with this, and just stops reading in the entire file as soon as it comes across the extra quote. 
+
+Only when I used `utils::read.delim()` or `data.table::fread()` to read in the same file I got a warning that something was off, with fread automatically solving it (I don't know if it always succeeds in solving, so be careful) 
+
+# Demonstration
+
+I made a dummy CSV with the following contents:
+```
+"a"	"b"	"c"
+"1"	"test 1"	"A"
+"2"	"test 2, this cell ends with an extra quote""	"B"
+"3"	"test 3"	"C"
+"4"	"test 4"	"D"
+```
+
+Lets see how different packages deal with this file.
+
+```{r}
+file <- "dirty_csv.csv"
+```
+
+
+### using base R
+
+```{r}
+read.delim(file) 
+```
+We get incomplete dataset, and a warning.
+
+### using base R, specifying `quote = ""`
+
+```{r}
+read.delim(file, quote = "")
+```
+
+
+We get a complete dataset, and a warning. However, column names are changed, and each value is surrounded by `\"`. Would require more preprocessing to remove these `\"` symbols.
+
+### Using `readr`
+
+```{r}
+readr::read_delim(file)
+```
+Incomplete data, and no warning!
+
+### Using `fread`
+```{r}
+data.table::fread(file)
+```
+Complete data, and a warning. It resolved the issue itself. I'm not sure it always solves the issue.
+
+# Conclusion
+
+Stay away from readr. Make sure to double check you're reading in the complete file. The extra quotes can appear in open fields such as `omschrijving` in the episode table. But I've also had this issue in the med file. 
+
+I've contacted Henk about this issue. He will see if he can remove the quote's from the data in the future. 
+
+I'm not sure how SPSS deals with this.
