@@ -1,0 +1,94 @@
+---
+title: "Loading multiple sav files"
+date: "29-04-2024"
+description: "Several examples on how to load in multiple sav files."
+author: "Lisette de Schipper"
+output: html_notebook
+---
+NOTE: You do NOT need to include the library every time you use a function from that library. This is done for each code chunk just so that it it is easy for you to copy everything you need.
+
+If you want to read in multiple BIGGER files, then you should consider parallelising this. There are several packages that allow for parallelism. in our ad hoc testing we found the furr package to be one of the quickest ones.
+
+The following chunk automatically rbindlists all data together.
+```{r}
+library(foreign)
+library(furr)
+
+files <- c(r"(my/link/to/some/file.sav",
+           r"(my/link/to/some/other/file.sav)")
+plan(multisession, workers = availableCores())
+
+dfs <- future_map_dfr(files, read.spss, to.data.frame = TRUE, use.value.labels = FALSE)
+dfs
+```
+
+You may not actually want to rbindlist everything. You could get a list of lists, which you can process and convert to a data frame yourself
+
+```{r}
+library(foreign)
+library(furr)
+
+files <- c(r"(my/link/to/some/file.sav",
+           r"(my/link/to/some/other/file.sav)")
+plan(multisession, workers = availableCores())
+
+data <- future_map(files, read.spss, use.value.labels = FALSE)
+
+data
+```
+
+
+You could also do some preprocessing while the functions are running in parallel:
+
+```{r}
+library(foreign)
+library(furr)
+
+files <- c(r"(my/link/to/some/file.sav",
+           r"(my/link/to/some/other/file.sav)")
+
+years <- list(2021, 2022)
+
+columns <- list("A column from some/file.sav", "A column from other/file.sav")
+
+process_sav_file <- function(file, year, columns){
+  file <- read.spss(file, to.data.frame = TRUE, use.value.labels = FALSE)
+  file <- file[columns] #select columns
+  file["year"] = year #add column
+}
+plan(multisession, workers = availableCores())
+
+dfs <- future_pmap_dfr(list(files, years, columns), process_sav_file)
+dfs
+```
+
+One possible alternative to parallelisation is the DoFuture package, which is only slightly slower (but it may be easier for you to adapt it to your needs). This also returns a list of lists.
+
+```{r}
+library(foreign)
+library(doFuture)
+
+files <- c(r"(my/link/to/some/file.sav",
+           r"(my/link/to/some/other/file.sav)")
+
+plan(multisession, workers = availableCores())
+
+dfs <- foreach(file = files) %doFuture% {
+  read.spss(r"(my/link/to/some/file.sav)", use.value.labels = FALSE)
+}
+
+dfs
+```
+
+If you want to read smaller files, you should do so sequentially, since parallellisation does create some overhead:
+
+```{r}
+library(foreign)
+
+files <- c(r"(my/link/to/some/file.sav",
+           r"(my/link/to/some/other/file.sav)")
+
+dfs <- lapply(files, read.spss, to.data.frame = TRUE, use.value.labels = FALSE)
+
+dfs
+```

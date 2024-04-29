@@ -1,0 +1,20 @@
+---
+title: "Loading and saving as parquet files"
+date: "29-04-2024"
+description: "Apache parquet is a data file format designed for efficient data storage and retrieval. Use this to your advantage!"
+author: "Lisette de Schipper"
+output: html_notebook
+---
+
+Writing data to parquet
+```{r}
+library(arrow)
+write_parquet(data, r"(destination/folder/file.parquet)")
+```
+
+Loading a parquet file
+```{r}
+library(arrow)
+df <- read_parquet(r"(location/of/file.parquet)")
+```
+
