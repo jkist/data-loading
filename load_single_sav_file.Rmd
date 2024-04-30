@@ -1,6 +1,6 @@
 ---
 title: "Loading a single sav file"
-date: "29-04-2024"
+date: "30-04-2024"
 description: "An example on loading in a sav file."
 author: "Lisette de Schipper"
 output: html_notebook
@@ -11,8 +11,8 @@ There are multiple packages that allow you to load in a sav file. The read.spss 
 
 ```{r}
 library(foreign)
-
-df <- read.spss(r"(my/link/to/some/file.sav)", to.data.frame = TRUE, use.value.labels = FALSE)
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+df <- read.spss(r"(dummy_data/simpledummyset.sav)", to.data.frame = TRUE, use.value.labels = FALSE)
 
 df
 ```
@@ -27,8 +27,9 @@ If you want more information about this function, just use the following command
 If you want to select certain columns, you can do the following:
 
 ```{r}
-columns <- c(1,2,3)
+columns <- c(1,2) # columns <-c("ID", "column1") would also work
 df <- df[columns]
+df
 ```
 
 

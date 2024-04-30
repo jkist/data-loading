@@ -1749,7 +1749,7 @@ display: none;
 
 <h1 class="title toc-ignore">Loading a single sav file</h1>
 <h4 class="author">Lisette de Schipper</h4>
-<h4 class="date">29-04-2024</h4>
+<h4 class="date">30-04-2024</h4>
 
 </div>
 
@@ -1762,13 +1762,20 @@ has limited support for changes in SPSS formats since (which have not
 been many).</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShmb3JlaWduKVxuXG5kZiA8LSByZWFkLnNwc3MoclwiKG15L2xpbmsvdG8vc29tZS9maWxlLnNhdilcIiwgdG8uZGF0YS5mcmFtZSA9IFRSVUUsIHVzZS52YWx1ZS5sYWJlbHMgPSBGQUxTRSlcblxuZGZcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShmb3JlaWduKVxuc2V0d2QoZGlybmFtZShyc3R1ZGlvYXBpOjpnZXRBY3RpdmVEb2N1bWVudENvbnRleHQoKSRwYXRoKSlcbmRmIDwtIHJlYWQuc3BzcyhyXCIoZHVtbXlfZGF0YS9zaW1wbGVkdW1teXNldC5zYXYpXCIsIHRvLmRhdGEuZnJhbWUgPSBUUlVFLCB1c2UudmFsdWUubGFiZWxzID0gRkFMU0UpXG5cbmRmXG5gYGAifQ== -->
 <pre class="r"><code>library(foreign)
-
-df &lt;- read.spss(r&quot;(my/link/to/some/file.sav)&quot;, to.data.frame = TRUE, use.value.labels = FALSE)
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+df &lt;- read.spss(r&quot;(dummy_data/simpledummyset.sav)&quot;, to.data.frame = TRUE, use.value.labels = FALSE)
 
 df</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MjAsIm5jb2wiOjUsInN1bW1hcnkiOltdfSwicmRmIjoiSDRzSUFBQUFBQUFBQmd0eWlURG1pdUJpWUdCZ1ptQmhabUpnWmdVeUdWaERROXgwTFJnWVdKaUFIRVlHRmdaT0VGMEJWQ1FNa2dWaVBpQVdzZi9BQUFZT0RGQ2FBMG9MUUdrUktDMEJwV1dndEFLVVZvTFNLbEJhRFVwclFHa3RLSzBEcGZXZ3RBR1VOb1RTUmxEYUdFcWJNTUFBeUNVaU1BODRZekFjY1V1NTRKWnl3dER1Z3B2aGlKdmhpc0ZBMGc0Tll3Y043b2dnRFZCWTltUkd6QUNGWGVUNTVCb2dMWCtTTHpvQ1JFLzYraVFBRk1acHoxZXRBTkt5S3Q1SkJTQjFzUkhyTW9DMGVwclV3UnVnc0dVdXMzNENrdmZJbmdYU3ArVEJ6NWtBNGlmekxRU3BWL3Q3UVdvRGtCWlZkUkY1QU5KZjlyTTRCaFEzSm1Wc0lMNHFhL09oQ1NCMVZTc3ViQUhGemN2Nm9ncHdHS09rQlhRYUJ0RDVoTVFKQVRMTUYyQkFwQVcycE1ROElNVE9LOG5QVFN6Sko0YUhUMTl4Um42cWdnS01WNUJmZ2xNZnFoenhwdURqNFhNWlZ2dFFNenRyWG1KdWFqRTAwRmloZ2t5ZXNQVEpucHlmVTVxYlo0aktOVUxsR3FOeVRkQ3M0RWpPVDBrdFNFeFBCYko1d2VJTWYxK2lxZUVzeWkvWGd6a0ZwSWlwQVJLWEl1anVUYzVKTElhNUZ5YklsWkpZa3FpWFZnVFVEK1Q5UTlQQ25sOVFrcG1mQjlURUJDclYyTkEwTXhhaENmQ1g1b0Zja3FLYm5GR2FsNjFyZ2liTlhKQ1hEcklUNGhNd2dQb0s1Rmc0bXhYaUNxYi9VTzFzc0doSXpVdlB6RXVGZVNjbk1TazFCMlp5U21vWmxNa0hEQTl3Y09nVkZHWG1sY0Q4Q1JRdDFpc0J4aXBNQ3hjd3lHRWlZSjh6L0FNQTlPSDdEK29GQUFBPSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["ID"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["column1"],"name":[2],"type":["chr"],"align":["left"]},{"label":["column2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["column3"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["column4"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"C","3":"12.022158","4":"1","5":"banana"},{"1":"2","2":"C","3":"5.137121","4":"1","5":"banana"},{"1":"3","2":"A","3":"8.175410","4":"1","5":"tomato"},{"1":"4","2":"C","3":"7.946344","4":"0","5":"tomato"},{"1":"5","2":"C","3":"7.893516","4":"1","5":"tomato"},{"1":"6","2":"D","3":"6.100493","4":"0","5":"banana"},{"1":"7","2":"C","3":"7.285444","4":"0","5":"tomato"},{"1":"8","2":"C","3":"8.182317","4":"1","5":"shoe"},{"1":"9","2":"B","3":"11.699423","4":"0","5":"potato"},{"1":"10","2":"A","3":"11.006761","4":"0","5":"banana"},{"1":"11","2":"D","3":"7.320723","4":"0","5":"potato"},{"1":"12","2":"D","3":"9.140740","4":"0","5":"tomato"},{"1":"13","2":"D","3":"7.346735","4":"0","5":"shoe"},{"1":"14","2":"A","3":"11.495728","4":"0","5":"potato"},{"1":"15","2":"A","3":"5.286393","4":"1","5":"potato"},{"1":"16","2":"A","3":"8.232372","4":"0","5":"potato"},{"1":"17","2":"E","3":"10.102463","4":"1","5":"banana"},{"1":"18","2":"E","3":"10.510771","4":"0","5":"tomato"},{"1":"19","2":"D","3":"11.239569","4":"0","5":"potato"},{"1":"20","2":"D","3":"13.456050","4":"1","5":"tomato"}],"options":{"columns":{"min":{},"max":[10],"total":[5]},"rows":{"min":[10],"max":[10],"total":[20]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>We use the format r”(…)” for paths/links, since we can then ignore
@@ -1785,17 +1792,25 @@ following command:</p>
 <p>If you want to select certain columns, you can do the following:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29sdW1ucyA8LSBjKDEsMiwzKVxuZGYgPC0gZGZbY29sdW1uc11cbmBgYCJ9 -->
-<pre class="r"><code>columns &lt;- c(1,2,3)
-df &lt;- df[columns]</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29sdW1ucyA8LSBjKDEsMikgIyBjb2x1bW5zIDwtYyhcImNvbHVtbilcbmRmIDwtIGRmW2NvbHVtbnNdXG5kZlxuYGBgIn0= -->
+<pre class="r"><code>columns &lt;- c(1,2) # columns &lt;-c(&quot;column)
+df &lt;- df[columns]
+df</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MjAsIm5jb2wiOjIsInN1bW1hcnkiOltdfSwicmRmIjoiSDRzSUFBQUFBQUFBQm5XU3dVdkRNQmpGdjZYdDVncWJnajE0OENBaUltS0xzeDY4NmJRS1hrVmgxN3JXV2V6UzByWFRvMyt5ZjhFMGFWOWdaalJRZmk4dmVVbStqejRGRTkrZTJFUmtrR2t3TWl3aHlYcDVmbkN2aUV3bUpoMHlxUy81SlRidENpSE5vZmljNngrcXh3MkJXK0FPNklCNzRENTRBQjZDUitBeGVBS2VnbWVnQjU2REkvQUM5TUZMVWtPK3hGRUYzRzJJY2Z0UzBMNTB1eEVQMnNXNFhkeHZpTFg0LytaYlBKekhDeFRFWUxKSHRiODN6ZEpxemtkYXFsOWtuNTVLRG1UaXUybUxveDgvVGNPRk9sNlpkaFNXb2ZkV2lMeVlyYlJJTDh2TEpPTWl4T1JQMGRYQ25VSXp0aXN1WHhLNTAvZUtmN2krdG16a2ZDYnZySzFtREtDZE5jMmFWN0JmeEx1SWQyTStTM2lzeWtuRDF6aFZKMGZ4RW5JbytsRzN3OHVMaEplcVR1RXV2RElyUXhXeFJUdVZVMWRPcXo5VzVySTFLUU1BQUE9PSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["ID"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["column1"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"C"},{"1":"2","2":"C"},{"1":"3","2":"A"},{"1":"4","2":"C"},{"1":"5","2":"C"},{"1":"6","2":"D"},{"1":"7","2":"C"},{"1":"8","2":"C"},{"1":"9","2":"B"},{"1":"10","2":"A"},{"1":"11","2":"D"},{"1":"12","2":"D"},{"1":"13","2":"D"},{"1":"14","2":"A"},{"1":"15","2":"A"},{"1":"16","2":"A"},{"1":"17","2":"E"},{"1":"18","2":"E"},{"1":"19","2":"D"},{"1":"20","2":"D"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[20]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Several other packages, suchs as Haven, also allow you to read in sav
 files, but they are considerably slower.</p>
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkxvYWRpbmcgYSBzaW5nbGUgc2F2IGZpbGUiDQpkYXRlOiAiMjktMDQtMjAyNCINCmRlc2NyaXB0aW9uOiAiQW4gZXhhbXBsZSBvbiBsb2FkaW5nIGluIGEgc2F2IGZpbGUuIg0KYXV0aG9yOiAiTGlzZXR0ZSBkZSBTY2hpcHBlciINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQoNClRoZXJlIGFyZSBtdWx0aXBsZSBwYWNrYWdlcyB0aGF0IGFsbG93IHlvdSB0byBsb2FkIGluIGEgc2F2IGZpbGUuIFRoZSByZWFkLnNwc3MgZnVuY3Rpb24gZnJvbSB0aGUgRm9yZWlnbiBwYWNrYWdlIGlzLCBnZW5lcmFsbHksIHRoZSBxdWlja2VzdCBvcHRpb24sIGJ1dCB0aGlzIGZ1bmN0aW9uIGhhcyBub3QgYmVlbiB1cGRhdGVkIHNpbmNlIDIwMDAuIEhlbmNlIHdoeSBpdCBoYXMgbGltaXRlZCBzdXBwb3J0IGZvciBjaGFuZ2VzIGluIFNQU1MgZm9ybWF0cyBzaW5jZSAod2hpY2ggaGF2ZSBub3QgYmVlbiBtYW55KS4NCg0KDQpgYGB7cn0NCmxpYnJhcnkoZm9yZWlnbikNCg0KZGYgPC0gcmVhZC5zcHNzKHIiKG15L2xpbmsvdG8vc29tZS9maWxlLnNhdikiLCB0by5kYXRhLmZyYW1lID0gVFJVRSwgdXNlLnZhbHVlLmxhYmVscyA9IEZBTFNFKQ0KDQpkZg0KYGBgDQoNCldlIHVzZSB0aGUgZm9ybWF0IHIiKC4uLikiIGZvciBwYXRocy9saW5rcywgc2luY2Ugd2UgY2FuIHRoZW4gaWdub3JlIHdoYXQgd2F5IHRoZSBzbGFzaGVzIGFyZSBmYWNpbmcuDQoNCklmIHlvdSB3YW50IG1vcmUgaW5mb3JtYXRpb24gYWJvdXQgdGhpcyBmdW5jdGlvbiwganVzdCB1c2UgdGhlIGZvbGxvd2luZyBjb21tYW5kOg0KYGBge3J9DQo/cmVhZC5zcHNzDQpgYGANCg0KSWYgeW91IHdhbnQgdG8gc2VsZWN0IGNlcnRhaW4gY29sdW1ucywgeW91IGNhbiBkbyB0aGUgZm9sbG93aW5nOg0KDQpgYGB7cn0NCmNvbHVtbnMgPC0gYygxLDIsMykNCmRmIDwtIGRmW2NvbHVtbnNdDQpgYGANCg0KDQpTZXZlcmFsIG90aGVyIHBhY2thZ2VzLCBzdWNocyBhcyBIYXZlbiwgYWxzbyBhbGxvdyB5b3UgdG8gcmVhZCBpbiBzYXYgZmlsZXMsIGJ1dCB0aGV5IGFyZSBjb25zaWRlcmFibHkgc2xvd2VyLg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkxvYWRpbmcgYSBzaW5nbGUgc2F2IGZpbGUiDQpkYXRlOiAiMzAtMDQtMjAyNCINCmRlc2NyaXB0aW9uOiAiQW4gZXhhbXBsZSBvbiBsb2FkaW5nIGluIGEgc2F2IGZpbGUuIg0KYXV0aG9yOiAiTGlzZXR0ZSBkZSBTY2hpcHBlciINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQoNClRoZXJlIGFyZSBtdWx0aXBsZSBwYWNrYWdlcyB0aGF0IGFsbG93IHlvdSB0byBsb2FkIGluIGEgc2F2IGZpbGUuIFRoZSByZWFkLnNwc3MgZnVuY3Rpb24gZnJvbSB0aGUgRm9yZWlnbiBwYWNrYWdlIGlzLCBnZW5lcmFsbHksIHRoZSBxdWlja2VzdCBvcHRpb24sIGJ1dCB0aGlzIGZ1bmN0aW9uIGhhcyBub3QgYmVlbiB1cGRhdGVkIHNpbmNlIDIwMDAuIEhlbmNlIHdoeSBpdCBoYXMgbGltaXRlZCBzdXBwb3J0IGZvciBjaGFuZ2VzIGluIFNQU1MgZm9ybWF0cyBzaW5jZSAod2hpY2ggaGF2ZSBub3QgYmVlbiBtYW55KS4NCg0KDQpgYGB7cn0NCmxpYnJhcnkoZm9yZWlnbikNCnNldHdkKGRpcm5hbWUocnN0dWRpb2FwaTo6Z2V0QWN0aXZlRG9jdW1lbnRDb250ZXh0KCkkcGF0aCkpDQpkZiA8LSByZWFkLnNwc3MociIoZHVtbXlfZGF0YS9zaW1wbGVkdW1teXNldC5zYXYpIiwgdG8uZGF0YS5mcmFtZSA9IFRSVUUsIHVzZS52YWx1ZS5sYWJlbHMgPSBGQUxTRSkNCg0KZGYNCmBgYA0KDQpXZSB1c2UgdGhlIGZvcm1hdCByIiguLi4pIiBmb3IgcGF0aHMvbGlua3MsIHNpbmNlIHdlIGNhbiB0aGVuIGlnbm9yZSB3aGF0IHdheSB0aGUgc2xhc2hlcyBhcmUgZmFjaW5nLg0KDQpJZiB5b3Ugd2FudCBtb3JlIGluZm9ybWF0aW9uIGFib3V0IHRoaXMgZnVuY3Rpb24sIGp1c3QgdXNlIHRoZSBmb2xsb3dpbmcgY29tbWFuZDoNCmBgYHtyfQ0KP3JlYWQuc3Bzcw0KYGBgDQoNCklmIHlvdSB3YW50IHRvIHNlbGVjdCBjZXJ0YWluIGNvbHVtbnMsIHlvdSBjYW4gZG8gdGhlIGZvbGxvd2luZzoNCg0KYGBge3J9DQpjb2x1bW5zIDwtIGMoMSwyKSAjIGNvbHVtbnMgPC1jKCJJRCIsICJjb2x1bW4xIikgd291bGQgYWxzbyB3b3JrDQpkZiA8LSBkZltjb2x1bW5zXQ0KZGYNCmBgYA0KDQoNClNldmVyYWwgb3RoZXIgcGFja2FnZXMsIHN1Y2hzIGFzIEhhdmVuLCBhbHNvIGFsbG93IHlvdSB0byByZWFkIGluIHNhdiBmaWxlcywgYnV0IHRoZXkgYXJlIGNvbnNpZGVyYWJseSBzbG93ZXIu</div>
 
 
 

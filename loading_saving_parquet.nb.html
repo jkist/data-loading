@@ -1749,7 +1749,7 @@ display: none;
 
 <h1 class="title toc-ignore">Loading and saving as parquet files</h1>
 <h4 class="author">Lisette de Schipper</h4>
-<h4 class="date">29-04-2024</h4>
+<h4 class="date">30-04-2024</h4>
 
 </div>
 
@@ -1758,24 +1758,36 @@ display: none;
 <p>Writing data to parquet</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShhcnJvdylcbndyaXRlX3BhcnF1ZXQoZGF0YSwgclwiKGRlc3RpbmF0aW9uL2ZvbGRlci9maWxlLnBhcnF1ZXQpXCIpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShhcnJvdylcbmxpYnJhcnkoZm9yZWlnbilcbnNldHdkKGRpcm5hbWUocnN0dWRpb2FwaTo6Z2V0QWN0aXZlRG9jdW1lbnRDb250ZXh0KCkkcGF0aCkpXG5kZiA8LSByZWFkLnNwc3MoclwiKGR1bW15X2RhdGEvc2ltcGxlZHVtbXlzZXQuc2F2KVwiLCB0by5kYXRhLmZyYW1lID0gVFJVRSwgdXNlLnZhbHVlLmxhYmVscyA9IEZBTFNFKVxud3JpdGVfcGFycXVldChkZiwgclwiKGR1bW15X2RhdGEvY29udmVydGVkX3NpbXBsZWR1bW15c2V0LnBhcnF1ZXQpXCIpXG5gYGAifQ== -->
 <pre class="r"><code>library(arrow)
-write_parquet(data, r&quot;(destination/folder/file.parquet)&quot;)</code></pre>
+library(foreign)
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+df &lt;- read.spss(r&quot;(dummy_data/simpledummyset.sav)&quot;, to.data.frame = TRUE, use.value.labels = FALSE)
+write_parquet(df, r&quot;(dummy_data/converted_simpledummyset.parquet)&quot;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Loading a parquet file</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShhcnJvdylcbmRmIDwtIHJlYWRfcGFycXVldChyXCIobG9jYXRpb24vb2YvZmlsZS5wYXJxdWV0KVwiKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShhcnJvdylcbnNldHdkKGRpcm5hbWUocnN0dWRpb2FwaTo6Z2V0QWN0aXZlRG9jdW1lbnRDb250ZXh0KCkkcGF0aCkpXG5kZiA8LSByZWFkX3BhcnF1ZXQoclwiKGR1bW15X2RhdGEvY29udmVydGVkX3NpbXBsZWR1bW15c2V0LnBhcnF1ZXQpXCIpXG5kZlxuYGBgIn0= -->
 <pre class="r"><code>library(arrow)
-df &lt;- read_parquet(r&quot;(location/of/file.parquet)&quot;)</code></pre>
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+df &lt;- read_parquet(r&quot;(dummy_data/converted_simpledummyset.parquet)&quot;)
+df</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibnJvdyI6MjAsIm5jb2wiOjUsInN1bW1hcnkiOltdfSwicmRmIjoiSDRzSUFBQUFBQUFBQmd0eWlURG1pdUJpWUdCZ1ptQmhabUpnWmdVeUdWaERROXgwTFJnWVdKaUFIRVlHRmdaT0VGMEJWQ1FNa2dWaVBpQVdzZi9BQUFZT0RGQ2FBMG9MUUdrUktDMEJwV1dndEFLVVZvTFNLbEJhRFVwclFHa3RLSzBEcGZXZ3RBR1VOb1RTUmxEYUdFcWJNTUFBeUNVaU1BODRZekFjY1V1NTRKWnl3dER1Z3B2aGlKdmhpc0ZBMGc0Tll3Y043b2dnRFZCWTltUkd6QUNGWGVUNTVCb2dMWCtTTHpvQ1JFLzYraVFBRk1acHoxZXRBTkt5S3Q1SkJTQjFzUkhyTW9DMGVwclV3UnVnc0dVdXMzNENrdmZJbmdYU3ArVEJ6NWtBNGlmekxRU3BWL3Q3UVdvRGtCWlZkUkY1QU5KZjlyTTRCaFEzSm1Wc0lMNHFhL09oQ1NCMVZTc3ViQUhGemN2Nm9ncHdHS09rQlhRYUJ0RDVoTVFKQVRMTUYyQkFwQVcycE1ROElNVE9LOG5QVFN6Sko0YUhUMTl4Um42cWdnS01WNUJmZ2xNZnFoenhwdURqNFhNWlZ2dFFNenRyWG1KdWFqRTAwRmloZ2t5ZXNQVEpucHlmVTVxYlo0aktOVUxsR3FOeVRkQ3M0RWpPVDBrdFNFeFBCYko1d2VJTWYxK2lxZUVzeWkvWGd6a0ZwSWlwQVJLWEl1anVUYzVKTElhNUZ5YklsWkpZa3FpWFZnVFVEK1Q5UTlQQ25sOVFrcG1mQjlURUJDclYyTkEwTXhhaENmQ1g1b0Zja3FLYm5GR2FsNjFyakNiTlhKQ1hEcklUNGhNd2h2b0s1Rmc0bXhYaUNxYi9VTzFzc0doSXpVdlB6RXVGZVNjbk1TazFCMlp5U21vWmxNa0hEQTl3Y09nVkZHWG1sY0Q4Q1JRdDFpc0J4aXBNQ3hjd3lHRWlZSjh6L0FNQU93MkdDdW9GQUFBPSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["ID"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["column1"],"name":[2],"type":["chr"],"align":["left"]},{"label":["column2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["column3"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["column4"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"C","3":"12.022158","4":"1","5":"banana","_rn_":"1"},{"1":"2","2":"C","3":"5.137121","4":"1","5":"banana","_rn_":"2"},{"1":"3","2":"A","3":"8.175410","4":"1","5":"tomato","_rn_":"3"},{"1":"4","2":"C","3":"7.946344","4":"0","5":"tomato","_rn_":"4"},{"1":"5","2":"C","3":"7.893516","4":"1","5":"tomato","_rn_":"5"},{"1":"6","2":"D","3":"6.100493","4":"0","5":"banana","_rn_":"6"},{"1":"7","2":"C","3":"7.285444","4":"0","5":"tomato","_rn_":"7"},{"1":"8","2":"C","3":"8.182317","4":"1","5":"shoe","_rn_":"8"},{"1":"9","2":"B","3":"11.699423","4":"0","5":"potato","_rn_":"9"},{"1":"10","2":"A","3":"11.006761","4":"0","5":"banana","_rn_":"10"},{"1":"11","2":"D","3":"7.320723","4":"0","5":"potato","_rn_":"11"},{"1":"12","2":"D","3":"9.140740","4":"0","5":"tomato","_rn_":"12"},{"1":"13","2":"D","3":"7.346735","4":"0","5":"shoe","_rn_":"13"},{"1":"14","2":"A","3":"11.495728","4":"0","5":"potato","_rn_":"14"},{"1":"15","2":"A","3":"5.286393","4":"1","5":"potato","_rn_":"15"},{"1":"16","2":"A","3":"8.232372","4":"0","5":"potato","_rn_":"16"},{"1":"17","2":"E","3":"10.102463","4":"1","5":"banana","_rn_":"17"},{"1":"18","2":"E","3":"10.510771","4":"0","5":"tomato","_rn_":"18"},{"1":"19","2":"D","3":"11.239569","4":"0","5":"potato","_rn_":"19"},{"1":"20","2":"D","3":"13.456050","4":"1","5":"tomato","_rn_":"20"}],"options":{"columns":{"min":{},"max":[10],"total":[5]},"rows":{"min":[10],"max":[10],"total":[20]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkxvYWRpbmcgYW5kIHNhdmluZyBhcyBwYXJxdWV0IGZpbGVzIg0KZGF0ZTogIjI5LTA0LTIwMjQiDQpkZXNjcmlwdGlvbjogIkFwYWNoZSBwYXJxdWV0IGlzIGEgZGF0YSBmaWxlIGZvcm1hdCBkZXNpZ25lZCBmb3IgZWZmaWNpZW50IGRhdGEgc3RvcmFnZSBhbmQgcmV0cmlldmFsLiBVc2UgdGhpcyB0byB5b3VyIGFkdmFudGFnZSEiDQphdXRob3I6ICJMaXNldHRlIGRlIFNjaGlwcGVyIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KV3JpdGluZyBkYXRhIHRvIHBhcnF1ZXQNCmBgYHtyfQ0KbGlicmFyeShhcnJvdykNCndyaXRlX3BhcnF1ZXQoZGF0YSwgciIoZGVzdGluYXRpb24vZm9sZGVyL2ZpbGUucGFycXVldCkiKQ0KYGBgDQoNCkxvYWRpbmcgYSBwYXJxdWV0IGZpbGUNCmBgYHtyfQ0KbGlicmFyeShhcnJvdykNCmRmIDwtIHJlYWRfcGFycXVldChyIihsb2NhdGlvbi9vZi9maWxlLnBhcnF1ZXQpIikNCmBgYA0KDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkxvYWRpbmcgYW5kIHNhdmluZyBhcyBwYXJxdWV0IGZpbGVzIg0KZGF0ZTogIjMwLTA0LTIwMjQiDQpkZXNjcmlwdGlvbjogIkFwYWNoZSBwYXJxdWV0IGlzIGEgZGF0YSBmaWxlIGZvcm1hdCBkZXNpZ25lZCBmb3IgZWZmaWNpZW50IGRhdGEgc3RvcmFnZSBhbmQgcmV0cmlldmFsLiBVc2UgdGhpcyB0byB5b3VyIGFkdmFudGFnZSEiDQphdXRob3I6ICJMaXNldHRlIGRlIFNjaGlwcGVyIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KV3JpdGluZyBkYXRhIHRvIHBhcnF1ZXQNCmBgYHtyfQ0KbGlicmFyeShhcnJvdykNCmxpYnJhcnkoZm9yZWlnbikNCnNldHdkKGRpcm5hbWUocnN0dWRpb2FwaTo6Z2V0QWN0aXZlRG9jdW1lbnRDb250ZXh0KCkkcGF0aCkpDQpkZiA8LSByZWFkLnNwc3MociIoZHVtbXlfZGF0YS9zaW1wbGVkdW1teXNldC5zYXYpIiwgdG8uZGF0YS5mcmFtZSA9IFRSVUUsIHVzZS52YWx1ZS5sYWJlbHMgPSBGQUxTRSkNCndyaXRlX3BhcnF1ZXQoZGYsIHIiKGR1bW15X2RhdGEvY29udmVydGVkX3NpbXBsZWR1bW15c2V0LnBhcnF1ZXQpIikNCmBgYA0KDQpMb2FkaW5nIGEgcGFycXVldCBmaWxlDQpgYGB7cn0NCmxpYnJhcnkoYXJyb3cpDQpzZXR3ZChkaXJuYW1lKHJzdHVkaW9hcGk6OmdldEFjdGl2ZURvY3VtZW50Q29udGV4dCgpJHBhdGgpKQ0KZGYgPC0gcmVhZF9wYXJxdWV0KHIiKGR1bW15X2RhdGEvY29udmVydGVkX3NpbXBsZWR1bW15c2V0LnBhcnF1ZXQpIikNCmRmDQpgYGANCg0K</div>
 
 
 
