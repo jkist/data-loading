@@ -12,17 +12,25 @@ Code to load data properly
 
 ## Folder Structure
 
-. src
-│   ├── dummy_data
-│   │   ├── nested_dummy_dir
-│           ├── simpledummyset.sav
-│   ├── simpledummyset.sav
-│   ├── simpledummyset2.sav
-├── create_dummy_data
-├── get_sav_files_from_dir.Rmd (and .nb.html)
-├── load_multiple_sav_files.Rmd (and .nb.html)
-├── load_single_sav_file.Rmd (and .nb.html)
-├── loading_saving_parquet.Rmd (and .nb.html)
-├── LICENSE
-├── README
-├── .gitignore
+```bash
+│   .gitignore
+│   LICENSE
+│   README.md
+│   create_dummy_data.R
+│   get_sav_files_from_dir.nb.html
+│   get_sav_files_from_dir.Rmd
+│   loading_saving_parquet.nb.html
+│   loading_saving_parquet.Rmd
+│   load_multiple_sav_files.nb.html
+│   load_multiple_sav_files.Rmd
+│   load_single_sav_file.nb.html
+│   load_single_sav_file.Rmd
+│
+└───dummy_data
+    │   converted_simpledummyset.parquet
+    │   simpledummyset.sav
+    │   simpledummyset2.sav
+    │
+    └───nested_dummy_dir
+            simpledummyset.sav
+```
