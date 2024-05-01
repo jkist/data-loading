@@ -1,6 +1,7 @@
 # data-loading
 Code to load data properly
 
+Note that all these example will not run ootb (out of the box) on CBS's servers, but you should be able to run them without a problem on your own computer (provided that you have installed the packages the scripts rely on.)
 
 ## Files of interest
 | Name | Function |
@@ -9,6 +10,7 @@ Code to load data properly
 | load_multiple_sav_files.Rmd | Examples of reading in multiple sav files. |
 | get_sav_files_from_dir.Rmd | Example of getting the paths of all sav files nested in a dir. |
 | loading_saving_parquet_dir.Rmd | Use this example to increase your load time. |
+ get_newest_sav_from_dir.Rmd | An example on how to get the latest sav file form a directory. |
 
 ## Folder Structure
 
@@ -17,6 +19,8 @@ Code to load data properly
 │   LICENSE
 │   README.md
 │   create_dummy_data.R
+│   get_newest_sav_from_dir.nb.html
+│   get_newest_sav_from_dir.Rmd
 │   get_sav_files_from_dir.nb.html
 │   get_sav_files_from_dir.Rmd
 │   loading_saving_parquet.nb.html
@@ -27,7 +31,6 @@ Code to load data properly
 │   load_single_sav_file.Rmd
 │
 └───dummy_data
-    │   converted_simpledummyset.parquet
     │   simpledummyset.sav
     │   simpledummyset2.sav
     │
