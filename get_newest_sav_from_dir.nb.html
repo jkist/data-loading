@@ -1760,21 +1760,25 @@ directory</h1>
 directory, you can use the following piece of code:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0d2QoZGlybmFtZShyc3R1ZGlvYXBpOjpnZXRBY3RpdmVEb2N1bWVudENvbnRleHQoKSRwYXRoKSlcblxuY29tbW9uX3BhdGggPC0gZmlsZS5wYXRoKGdldHdkKCksIHJcIihkdW1teV9kYXRhKVwiKVxuXG4jIGdldCBhbGwgbmVzdGVkIGZpbGVzXG5maWxlIDwtIHJvd25hbWVzKGZpbGUuaW5mbyhsaXN0LmZpbGVzKHBhdGg9Y29tbW9uX3BhdGgsIGZ1bGwubmFtZXMgPSBUUlVFLCByZWN1cnNpdmUgPSBUUlVFLCBwYXR0ZXJuID0gJy5zYXYnKSAlPiUgZmlsdGVyKG10aW1lID09IG1heChtdGltZSkpXG5cbmZpbGVcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0d2QoZGlybmFtZShyc3R1ZGlvYXBpOjpnZXRBY3RpdmVEb2N1bWVudENvbnRleHQoKSRwYXRoKSlcblxuY29tbW9uX3BhdGggPC0gZmlsZS5wYXRoKGdldHdkKCksIHJcIihkdW1teV9kYXRhKVwiKVxuXG5maWxlcyA8LSBmaWxlLmluZm8obGlzdC5maWxlcyhwYXRoPWNvbW1vbl9wYXRoLCBmdWxsLm5hbWVzID0gVFJVRSwgcGF0dGVybiA9ICcuc2F2JykpXG5cbmZpbGUgPC0gcm93bmFtZXModGFpbChmaWxlc1tvcmRlcihmaWxlcyRtdGltZSksXSwgMSkpXG5cbmZpbGVcbmBgYCJ9 -->
 <pre class="r"><code>setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 common_path &lt;- file.path(getwd(), r&quot;(dummy_data)&quot;)
 
-# get all nested files
-file &lt;- rownames(file.info(list.files(path=common_path, full.names = TRUE, recursive = TRUE, pattern = &#39;.sav&#39;) %&gt;% filter(mtime == max(mtime))
+files &lt;- file.info(list.files(path=common_path, full.names = TRUE, pattern = &#39;.sav&#39;))
+
+file &lt;- rownames(tail(files[order(files$mtime),], 1))
 
 file</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiQzovVXNlcnMvbGRlc2NoaXBwZXIvanVqdS9kYXRhLWxvYWRpbmcvZHVtbXlfZGF0YS9zaW1wbGVkdW1teXNldDIuc2F2XCJcbiJ9 -->
+<pre><code>[1] &quot;C:/Users/ldeschipper/juju/data-loading/dummy_data/simpledummyset2.sav&quot;</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkdldCB0aGUgbmV3ZXN0IHNhdiBmaWxlIGZyb20gYSBkaXJlY3RvcnkiDQpkYXRlOiAiMDEtMDUtMjAyNCINCmRlc2NyaXB0aW9uOiAiQW4gZXhhbXBsZSBvbiBob3cgdG8gZ2V0IHRoZSBsYXRlc3Qgc2F2IGZpbGUgZnJvbSBhIGRpci4iDQphdXRob3I6ICJMaXNldHRlIGRlIFNjaGlwcGVyIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KSWYgeW91IHdhbnQgdG8gZW5zdXJlIHlvdSdyZSBhbHdheXMgdXNpbmcgdGhlIGxhdGVzdCBzYXYgZmlsZSBpbiBhIGRpcmVjdG9yeSwgeW91IGNhbiB1c2UgdGhlIGZvbGxvd2luZyBwaWVjZSBvZiBjb2RlOg0KDQpgYGB7cn0NCnNldHdkKGRpcm5hbWUocnN0dWRpb2FwaTo6Z2V0QWN0aXZlRG9jdW1lbnRDb250ZXh0KCkkcGF0aCkpDQoNCmNvbW1vbl9wYXRoIDwtIGZpbGUucGF0aChnZXR3ZCgpLCByIihkdW1teV9kYXRhKSIpDQoNCiMgZ2V0IGFsbCBuZXN0ZWQgZmlsZXMNCmZpbGUgPC0gcm93bmFtZXMoZmlsZS5pbmZvKGxpc3QuZmlsZXMocGF0aD1jb21tb25fcGF0aCwgZnVsbC5uYW1lcyA9IFRSVUUsIHJlY3Vyc2l2ZSA9IFRSVUUsIHBhdHRlcm4gPSAnLnNhdicpICU+JSBmaWx0ZXIobXRpbWUgPT0gbWF4KG10aW1lKSkNCg0KZmlsZQ0KYGBgDQoNCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkdldCB0aGUgbmV3ZXN0IHNhdiBmaWxlIGZyb20gYSBkaXJlY3RvcnkiDQpkYXRlOiAiMDEtMDUtMjAyNCINCmRlc2NyaXB0aW9uOiAiQW4gZXhhbXBsZSBvbiBob3cgdG8gZ2V0IHRoZSBsYXRlc3Qgc2F2IGZpbGUgZnJvbSBhIGRpci4iDQphdXRob3I6ICJMaXNldHRlIGRlIFNjaGlwcGVyIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KSWYgeW91IHdhbnQgdG8gZW5zdXJlIHlvdSdyZSBhbHdheXMgdXNpbmcgdGhlIGxhdGVzdCBzYXYgZmlsZSBpbiBhIGRpcmVjdG9yeSwgeW91IGNhbiB1c2UgdGhlIGZvbGxvd2luZyBwaWVjZSBvZiBjb2RlOg0KDQpgYGB7cn0NCnNldHdkKGRpcm5hbWUocnN0dWRpb2FwaTo6Z2V0QWN0aXZlRG9jdW1lbnRDb250ZXh0KCkkcGF0aCkpDQoNCmNvbW1vbl9wYXRoIDwtIGZpbGUucGF0aChnZXR3ZCgpLCByIihkdW1teV9kYXRhKSIpDQoNCmZpbGVzIDwtIGZpbGUuaW5mbyhsaXN0LmZpbGVzKHBhdGg9Y29tbW9uX3BhdGgsIGZ1bGwubmFtZXMgPSBUUlVFLCBwYXR0ZXJuID0gJy5zYXYnKSkNCg0KZmlsZSA8LSByb3duYW1lcyh0YWlsKGZpbGVzW29yZGVyKGZpbGVzJG10aW1lKSxdLCAxKSkNCg0KZmlsZQ0KYGBgDQoNCg==</div>
 
 
 
