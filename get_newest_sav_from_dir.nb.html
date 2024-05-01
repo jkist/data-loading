@@ -12,7 +12,7 @@
 <meta name="author" content="Lisette de Schipper" />
 
 
-<title>Get sav files form a directory.</title>
+<title>Get the newest sav file from a directory</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1747,7 +1747,8 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Get sav files form a directory.</h1>
+<h1 class="title toc-ignore">Get the newest sav file from a
+directory</h1>
 <h4 class="author">Lisette de Schipper</h4>
 <h4 class="date">01-05-2024</h4>
 
@@ -1755,40 +1756,25 @@ display: none;
 
 
 <!-- rnb-text-begin -->
-<p>If you want to retrieve the paths to all sav files in a directory
-(and its subdirectories), you can use the following:</p>
+<p>If you want to ensure you’re always using the latest sav file in a
+directory, you can use the following piece of code:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyB0aGlzIGlzIGEgZnVuY3Rpb24gdGhhdCBjaGVja3Mgd2hldGhlciBhIHN0cmluZyBpcyBhIHNhdi1maWxlIG9yIG5vdFxuaXNfc2F2X2ZpbGUgPC0gZnVuY3Rpb24oZmlsZSkge1xuICByZXR1cm4gKGdyZXBsKFwiKy5zYXZcIiwgZmlsZSwgaWdub3JlLmNhc2UgPSBUUlVFKSlcbn1cblxuc2V0d2QoZGlybmFtZShyc3R1ZGlvYXBpOjpnZXRBY3RpdmVEb2N1bWVudENvbnRleHQoKSRwYXRoKSlcblxuY29tbW9uX3BhdGggPC0gZmlsZS5wYXRoKGdldHdkKCksIHJcIihkdW1teV9kYXRhKVwiKVxuXG4jIGdldCBhbGwgbmVzdGVkIGZpbGVzXG5maWxlcyA8LSBsaXN0LmZpbGVzKHBhdGg9Y29tbW9uX3BhdGgsIGZ1bGwubmFtZXMgPSBUUlVFLCByZWN1cnNpdmUgPSBUUlVFLCBwYXR0ZXJuID0gJy5zYXYnKVxuXG4jICNnZXQgYWxsIHNhdiBmaWxlc1xuIyBmaWxlcyA9IHNhcHBseShkaXJzLCBpc19zYXZfZmlsZSlcblxuIyBmaWxlcyA9IG5hbWVzKHdoaWNoKGZpbGVzID09IFRSVUUpKVxuXG5maWxlc1xuYGBgIn0= -->
-<pre class="r"><code># this is a function that checks whether a string is a sav-file or not
-is_sav_file &lt;- function(file) {
-  return (grepl(&quot;+.sav&quot;, file, ignore.case = TRUE))
-}
-
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0d2QoZGlybmFtZShyc3R1ZGlvYXBpOjpnZXRBY3RpdmVEb2N1bWVudENvbnRleHQoKSRwYXRoKSlcblxuY29tbW9uX3BhdGggPC0gZmlsZS5wYXRoKGdldHdkKCksIHJcIihkdW1teV9kYXRhKVwiKVxuXG4jIGdldCBhbGwgbmVzdGVkIGZpbGVzXG5maWxlIDwtIHJvd25hbWVzKGZpbGUuaW5mbyhsaXN0LmZpbGVzKHBhdGg9Y29tbW9uX3BhdGgsIGZ1bGwubmFtZXMgPSBUUlVFLCByZWN1cnNpdmUgPSBUUlVFLCBwYXR0ZXJuID0gJy5zYXYnKSAlPiUgZmlsdGVyKG10aW1lID09IG1heChtdGltZSkpXG5cbmZpbGVcbmBgYCJ9 -->
+<pre class="r"><code>setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 common_path &lt;- file.path(getwd(), r&quot;(dummy_data)&quot;)
 
 # get all nested files
-files &lt;- list.files(path=common_path, full.names = TRUE, recursive = TRUE, pattern = &#39;.sav&#39;)
+file &lt;- rownames(file.info(list.files(path=common_path, full.names = TRUE, recursive = TRUE, pattern = &#39;.sav&#39;) %&gt;% filter(mtime == max(mtime))
 
-# #get all sav files
-# files = sapply(dirs, is_sav_file)
-
-# files = names(which(files == TRUE))
-
-files</code></pre>
+file</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiQzovVXNlcnMvbGRlc2NoaXBwZXIvanVqdS9kYXRhLWxvYWRpbmcvZHVtbXlfZGF0YS9uZXN0ZWRfZHVtbXlfZGlyL3NpbXBsZWR1bW15c2V0LnNhdlwiXG5bMl0gXCJDOi9Vc2Vycy9sZGVzY2hpcHBlci9qdWp1L2RhdGEtbG9hZGluZy9kdW1teV9kYXRhL3NpbXBsZWR1bW15c2V0LnNhdlwiICAgICAgICAgICAgICAgICBcblszXSBcIkM6L1VzZXJzL2xkZXNjaGlwcGVyL2p1anUvZGF0YS1sb2FkaW5nL2R1bW15X2RhdGEvc2ltcGxlZHVtbXlzZXQyLnNhdlwiICAgICAgICAgICAgICAgIFxuIn0= -->
-<pre><code>[1] &quot;C:/Users/ldeschipper/juju/data-loading/dummy_data/nested_dummy_dir/simpledummyset.sav&quot;
-[2] &quot;C:/Users/ldeschipper/juju/data-loading/dummy_data/simpledummyset.sav&quot;                 
-[3] &quot;C:/Users/ldeschipper/juju/data-loading/dummy_data/simpledummyset2.sav&quot;                </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkdldCBzYXYgZmlsZXMgZm9ybSBhIGRpcmVjdG9yeS4iDQpkYXRlOiAiMDEtMDUtMjAyNCINCmRlc2NyaXB0aW9uOiAiQW4gZXhhbXBsZSBvbiBnZXR0aW5nIHNhdiBmaWxlcyBmb3JtIGEgZGlyZWN0b3J5LiINCmF1dGhvcjogIkxpc2V0dGUgZGUgU2NoaXBwZXIiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpJZiB5b3Ugd2FudCB0byByZXRyaWV2ZSB0aGUgcGF0aHMgdG8gYWxsIHNhdiBmaWxlcyBpbiBhIGRpcmVjdG9yeSAoYW5kIGl0cyBzdWJkaXJlY3RvcmllcyksIHlvdSBjYW4gdXNlIHRoZSBmb2xsb3dpbmc6DQoNCmBgYHtyfQ0Kc2V0d2QoZGlybmFtZShyc3R1ZGlvYXBpOjpnZXRBY3RpdmVEb2N1bWVudENvbnRleHQoKSRwYXRoKSkNCg0KY29tbW9uX3BhdGggPC0gZmlsZS5wYXRoKGdldHdkKCksIHIiKGR1bW15X2RhdGEpIikNCg0KIyBnZXQgYWxsIG5lc3RlZCBmaWxlcw0KZmlsZXMgPC0gbGlzdC5maWxlcyhwYXRoPWNvbW1vbl9wYXRoLCBmdWxsLm5hbWVzID0gVFJVRSwgcmVjdXJzaXZlID0gVFJVRSwgcGF0dGVybiA9ICcuc2F2JykNCg0KZmlsZXMNCmBgYA0KDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkdldCB0aGUgbmV3ZXN0IHNhdiBmaWxlIGZyb20gYSBkaXJlY3RvcnkiDQpkYXRlOiAiMDEtMDUtMjAyNCINCmRlc2NyaXB0aW9uOiAiQW4gZXhhbXBsZSBvbiBob3cgdG8gZ2V0IHRoZSBsYXRlc3Qgc2F2IGZpbGUgZnJvbSBhIGRpci4iDQphdXRob3I6ICJMaXNldHRlIGRlIFNjaGlwcGVyIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KSWYgeW91IHdhbnQgdG8gZW5zdXJlIHlvdSdyZSBhbHdheXMgdXNpbmcgdGhlIGxhdGVzdCBzYXYgZmlsZSBpbiBhIGRpcmVjdG9yeSwgeW91IGNhbiB1c2UgdGhlIGZvbGxvd2luZyBwaWVjZSBvZiBjb2RlOg0KDQpgYGB7cn0NCnNldHdkKGRpcm5hbWUocnN0dWRpb2FwaTo6Z2V0QWN0aXZlRG9jdW1lbnRDb250ZXh0KCkkcGF0aCkpDQoNCmNvbW1vbl9wYXRoIDwtIGZpbGUucGF0aChnZXR3ZCgpLCByIihkdW1teV9kYXRhKSIpDQoNCiMgZ2V0IGFsbCBuZXN0ZWQgZmlsZXMNCmZpbGUgPC0gcm93bmFtZXMoZmlsZS5pbmZvKGxpc3QuZmlsZXMocGF0aD1jb21tb25fcGF0aCwgZnVsbC5uYW1lcyA9IFRSVUUsIHJlY3Vyc2l2ZSA9IFRSVUUsIHBhdHRlcm4gPSAnLnNhdicpICU+JSBmaWx0ZXIobXRpbWUgPT0gbWF4KG10aW1lKSkNCg0KZmlsZQ0KYGBgDQoNCg==</div>
 
 
 
@@ -1835,7 +1821,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("get_sav_files_from_dir.Rmd");
+  window.initializeSourceEmbed("get_newest_sav_from_dir.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>

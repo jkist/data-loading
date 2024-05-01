@@ -8,7 +8,7 @@ output: html_notebook
 
 NOTE: You do NOT need to include the library every time you use a function from that library. This is done for each code chunk just so that it it is easy for you to copy everything you need.
 
-If you want to read in multiple BIGGER files, then you should consider parallelising this. There are several packages that allow for parallelism. in our ad hoc testing we found the furr package to be one of the quickest ones.
+If you want to read in multiple BIGGER files, then you should consider parallelising this. There are several packages that allow for parallelism. in our ad hoc testing we found the furrr package to be one of the quickest ones.
 
 The following chunk automatically concatenates all dataframes together.
 ```{r}

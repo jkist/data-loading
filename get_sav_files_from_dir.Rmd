@@ -1,6 +1,6 @@
 ---
 title: "Get sav files form a directory."
-date: "30-04-2024"
+date: "01-05-2024"
 description: "An example on getting sav files form a directory."
 author: "Lisette de Schipper"
 output: html_notebook
@@ -9,22 +9,12 @@ output: html_notebook
 If you want to retrieve the paths to all sav files in a directory (and its subdirectories), you can use the following:
 
 ```{r}
-# this is a function that checks whether a string is a sav-file or not
-is_sav_file <- function(file) {
-  return (grepl("+.sav", file, ignore.case = TRUE))
-}
-
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 common_path <- file.path(getwd(), r"(dummy_data)")
 
 # get all nested files
-dirs <- list.files(path=common_path, full.names = TRUE, recursive = TRUE)
-
-#get all sav files
-files = sapply(dirs, is_sav_file)
-
-files = names(which(files == TRUE))
+files <- list.files(path=common_path, full.names = TRUE, recursive = TRUE, pattern = '.sav')
 
 files
 ```
