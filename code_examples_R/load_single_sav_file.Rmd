@@ -1,6 +1,6 @@
 ---
 title: "Loading a single sav file"
-date: "30-04-2024"
+date: "02-05-2024"
 description: "An example on loading in a sav file."
 author: "Lisette de Schipper"
 output: html_notebook
@@ -12,7 +12,7 @@ There are multiple packages that allow you to load in a sav file. The read.spss 
 ```{r}
 library(foreign)
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-df <- read.spss(r"(dummy_data/simpledummyset.sav)", to.data.frame = TRUE, use.value.labels = FALSE)
+df <- read.spss(r"(../dummy_data/simpledummyset.sav)", to.data.frame = TRUE, use.value.labels = FALSE)
 
 df
 ```

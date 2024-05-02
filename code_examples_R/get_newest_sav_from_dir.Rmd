@@ -1,6 +1,6 @@
 ---
 title: "Get the newest sav file from a directory"
-date: "01-05-2024"
+date: "02-05-2024"
 description: "An example on how to get the latest sav file from a dir."
 author: "Lisette de Schipper"
 output: html_notebook
@@ -11,7 +11,7 @@ If you want to ensure you're always using the latest sav file in a directory, yo
 ```{r}
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
-common_path <- file.path(getwd(), r"(dummy_data)")
+common_path <- file.path(getwd(), r"(../dummy_data)")
 
 files <- file.info(list.files(path=common_path, full.names = TRUE, pattern = '.sav'))
 

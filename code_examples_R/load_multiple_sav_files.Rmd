@@ -1,6 +1,6 @@
 ---
 title: "Loading multiple sav files"
-date: "30-04-2024"
+date: "02-05-2024"
 description: "Several examples on how to load in multiple sav files."
 author: "Lisette de Schipper"
 output: html_notebook
@@ -15,8 +15,8 @@ The following chunk automatically concatenates all dataframes together.
 library(foreign)
 library(furrr)
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-files <- c(r"(dummy_data/simpledummyset.sav)",
-           r"(dummy_data/simpledummyset2.sav)")
+files <- c(r"(../dummy_data/simpledummyset.sav)",
+           r"(../dummy_data/simpledummyset2.sav)")
            
 plan(multisession, workers = availableCores())
 
@@ -29,8 +29,8 @@ You may not actually want to concatenate all dataframes. If so:
 library(foreign)
 library(furrr)
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-files <- c(r"(dummy_data/simpledummyset.sav)",
-           r"(dummy_data/simpledummyset2.sav)")
+files <- c(r"(../dummy_data/simpledummyset.sav)",
+           r"(../dummy_data/simpledummyset2.sav)")
 plan(multisession, workers = availableCores())
 
 dfs <- future_map(files, read.spss, to.data.frame = TRUE, use.value.labels = FALSE)
