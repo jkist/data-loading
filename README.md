@@ -1,9 +1,9 @@
 # data-loading
-Code to load data properly
+Code to load data properly, organised per programming language in their own folder.
 
 Note that all these example will not run ootb (out of the box) on CBS's servers (since you do not have the rights to change the working directory), but you should be able to run them without a problem on your own computer (provided that you have installed the packages the scripts rely on.)
 
-## Files of interest
+## Files of interest in folder code_examples_R
 | Name | Function |
 |------|----------|
 | load_single_sav_file.Rmd | Example of reading in a single sav file |
