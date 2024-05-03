@@ -1,0 +1,99 @@
+---
+title: "Loading multiple sav files"
+date: "02-05-2024"
+description: "Several examples on how to load in multiple sav files."
+author: "Lisette de Schipper"
+output: html_notebook
+---
+
+NOTE: You do NOT need to include the library every time you use a function from that library. This is done for each code chunk just so that it it is easy for you to copy everything you need.
+
+If you want to read in multiple BIGGER files, then you should consider parallelising this. There are several packages that allow for parallelism. in our ad hoc testing we found the furrr package to be one of the quickest ones.
+
+The following chunk automatically concatenates all dataframes together.
+```{r}
+library(foreign)
+library(furrr)
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+files <- c(r"(../dummy_data/simpledummyset.sav)",
+           r"(../dummy_data/simpledummyset2.sav)")
+           
+plan(multisession, workers = availableCores())
+
+df <- future_map_dfr(files, read.spss, to.data.frame = TRUE, use.value.labels = FALSE)
+df
+```
+You may not actually want to concatenate all dataframes. If so:
+
+```{r}
+library(foreign)
+library(furrr)
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+files <- c(r"(../dummy_data/simpledummyset.sav)",
+           r"(../dummy_data/simpledummyset2.sav)")
+plan(multisession, workers = availableCores())
+
+dfs <- future_map(files, read.spss, to.data.frame = TRUE, use.value.labels = FALSE)
+
+dfs
+
+is.data.frame(dfs[[1]])
+```
+
+You could also do some preprocessing while the functions are running in parallel (see below). Note that you can also use the function future_pmap if you do not want to concatenate all dataframes.
+
+```{r}
+library(foreign)
+library(furrr)
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+files <- c(r"(dummy_data/simpledummyset.sav)",
+           r"(dummy_data/simpledummyset2.sav)")
+
+years <- list(2021, 2022)
+
+columns <- list(c("column1", "column2"), c("column1", "column3"))
+
+process_sav_file <- function(file, year, columns){
+  file <- read.spss(file, to.data.frame = TRUE, use.value.labels = FALSE)
+  file <- file[columns] #select columns
+  file["year"] = year #add column
+  return (file)
+}
+plan(multisession, workers = availableCores())
+
+df <- future_pmap_dfr(list(files, years, columns), process_sav_file)
+df
+```
+
+One possible alternative to parallelisation is the DoFuture package, which is only slightly slower but is dependant on more other packages (but it may be easier for you to adapt it to your needs).
+
+```{r}
+library(foreign)
+library(doFuture)
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+files <- c(r"(dummy_data/simpledummyset.sav)",
+           r"(dummy_data/simpledummyset2.sav)")
+
+plan(multisession, workers = availableCores())
+
+dfs <- foreach(file = files) %dofuture% {
+  read.spss(file, to.data.frame = TRUE, use.value.labels = FALSE)
+}
+
+dfs
+
+is.data.frame(dfs[[1]])
+```
+
+If you want to read smaller files, you should do so sequentially, since parallellisation does create some overhead:
+
+```{r}
+library(foreign)
+
+files <- c(r"(dummy_data/simpledummyset.sav)",
+           r"(dummy_data/simpledummyset2.sav)")
+
+dfs <- lapply(files, read.spss, to.data.frame = TRUE, use.value.labels = FALSE)
+
+dfs
+```

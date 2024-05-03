@@ -1,0 +1,36 @@
+---
+title: "Loading a single sav file"
+date: "02-05-2024"
+description: "An example on loading in a sav file."
+author: "Lisette de Schipper"
+output: html_notebook
+---
+
+There are multiple packages that allow you to load in a sav file. The read.spss function from the Foreign package is, generally, the quickest option, but this function has not been updated since 2000. Hence why it has limited support for changes in SPSS formats since (which have not been many).
+
+
+```{r}
+library(foreign)
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+df <- read.spss(r"(../dummy_data/simpledummyset.sav)", to.data.frame = TRUE, use.value.labels = FALSE)
+
+df
+```
+
+We use the format r"(...)" for paths/links, since we can then ignore what way the slashes are facing.
+
+If you want more information about this function, just use the following command:
+```{r}
+?read.spss
+```
+
+If you want to select certain columns, you can do the following:
+
+```{r}
+columns <- c(1,2) # columns <-c("ID", "column1") would also work
+df <- df[columns]
+df
+```
+
+
+Several other packages, suchs as Haven, also allow you to read in sav files, but they are considerably slower.
