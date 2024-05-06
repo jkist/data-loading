@@ -12,6 +12,9 @@ Note that all these example will not run ootb (out of the box) on CBS's servers 
 | loading_saving_parquet_dir.Rmd | Use this example to increase your load time. |
  get_newest_sav_from_dir.Rmd | An example on how to get the latest sav file form a directory. |
 
+## Reading dirty csv files
+Some R packages can not handle a csv file with extra quotes and will return only part of the file. See 20240506_reading_dirty_csv
+
 ## Folder Structure
 
 ```bash
@@ -28,9 +31,15 @@ Note that all these example will not run ootb (out of the box) on CBS's servers 
 │       load_multiple_sav_files.Rmd
 │       load_single_sav_file.Rmd
 │
+├───20240506_reading_dirty_csv
+│		readme.md
+│		dirty_csv.Rmd
+│		dirty_csv.html
+│
 └───dummy_data
     │   simpledummyset.sav
     │   simpledummyset2.sav
+	|	dirty_csv.csv
     │
     └───nested_dummy_dir
             simpledummyset.sav
