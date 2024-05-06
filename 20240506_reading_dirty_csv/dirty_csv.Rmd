@@ -1,7 +1,7 @@
 ---
 title: "Reading ELAN csv's in R"
 author: "Jasper van Egeraat"
-date: "2024-04-18"
+date: "2024-05-06"
 output: html_document
 ---
 
@@ -31,7 +31,7 @@ I made a dummy CSV with the following contents:
 Lets see how different packages deal with this file.
 
 ```{r}
-file <- "dirty_csv.csv"
+file <- "../dummy_data/dirty_csv.csv"
 ```
 
 
@@ -66,7 +66,7 @@ Complete data, and a warning. It resolved the issue itself. I'm not sure it alwa
 
 # Conclusion
 
-Stay away from readr. Make sure to double check you're reading in the complete file. The extra quotes can appear in open fields such as `omschrijving` in the episode table. But I've also had this issue in the med file. 
+Be careful when reading in files with readr. Make sure to double check you're reading in the complete file. The extra quotes can appear in open fields such as `omschrijving` in the episode table. But I've also had this issue in the med file. 
 
 I've contacted Henk about this issue. He will see if he can remove the quote's from the data in the future. 
 

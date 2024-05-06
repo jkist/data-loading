@@ -383,12 +383,12 @@ don’t know if it always succeeds in solving, so be careful)</p>
 &quot;3&quot; &quot;test 3&quot;    &quot;C&quot;
 &quot;4&quot; &quot;test 4&quot;    &quot;D&quot;</code></pre>
 <p>Lets see how different packages deal with this file.</p>
-<pre class="r"><code>file &lt;- &quot;dirty_csv.csv&quot;</code></pre>
+<pre class="r"><code>file &lt;- &quot;../dummy_data/dirty_csv.csv&quot;</code></pre>
 <div id="using-base-r" class="section level3">
 <h3>using base R</h3>
 <pre class="r"><code>read.delim(file) </code></pre>
 <pre><code>## Warning in read.table(file = file, header = header, sep = sep, quote = quote, :
-## incomplete final line found by readTableHeader on &#39;dirty_csv.csv&#39;</code></pre>
+## incomplete final line found by readTableHeader on &#39;../dummy_data/dirty_csv.csv&#39;</code></pre>
 <pre><code>##   a      b c
 ## 1 4 test 4 D</code></pre>
 <p>We get incomplete dataset, and a warning.</p>
@@ -397,7 +397,7 @@ don’t know if it always succeeds in solving, so be careful)</p>
 <h3>using base R, specifying <code>quote = &quot;&quot;</code></h3>
 <pre class="r"><code>read.delim(file, quote = &quot;&quot;)</code></pre>
 <pre><code>## Warning in read.table(file = file, header = header, sep = sep, quote = quote, :
-## incomplete final line found by readTableHeader on &#39;dirty_csv.csv&#39;</code></pre>
+## incomplete final line found by readTableHeader on &#39;../dummy_data/dirty_csv.csv&#39;</code></pre>
 <pre><code>##   X.a.                                          X.b. X.c.
 ## 1  &quot;1&quot;                                      &quot;test 1&quot;  &quot;A&quot;
 ## 2  &quot;2&quot; &quot;test 2, this cell ends with an extra quote&quot;&quot;  &quot;B&quot;
@@ -441,10 +441,10 @@ sure it always solves the issue.</p>
 </div>
 <div id="conclusion" class="section level1">
 <h1>Conclusion</h1>
-<p>Stay away from readr. Make sure to double check you’re reading in the
-complete file. The extra quotes can appear in open fields such as
-<code>omschrijving</code> in the episode table. But I’ve also had this
-issue in the med file.</p>
+<p>Be careful when reading in files with readr. Make sure to double
+check you’re reading in the complete file. The extra quotes can appear
+in open fields such as <code>omschrijving</code> in the episode table.
+But I’ve also had this issue in the med file.</p>
 <p>I’ve contacted Henk about this issue. He will see if he can remove
 the quote’s from the data in the future.</p>
 <p>I’m not sure how SPSS deals with this.</p>
