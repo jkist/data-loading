@@ -5,9 +5,9 @@
 
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
-nrows = 20
+nrows = 200000000
 
-df <- data.frame(ID = seq(1, nrows, by=1) )
+df <- data.frame(ID = seq(1, nrows, by=1))
 
 df["column1"] <- sample(LETTERS[1:5],nrows, TRUE)
 
@@ -17,4 +17,4 @@ df["column3"] <- sample(c(TRUE,FALSE), nrows, TRUE)
 
 df["column4"] <- sample(c("potato","tomato", "banana", "shoe"), nrows, TRUE)
 
-haven::write_sav(df, r"(dummy_data\simpledummyset.sav)")
+haven::write_sav(df, r"(..\dummy_data\simpledummyset.sav)")
