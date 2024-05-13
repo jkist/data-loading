@@ -1,7 +1,7 @@
 """
 title: load_multiple_sav_files.py
-description: Python script that can be used to load in multiple sav files
-date: 06-05-2024
+description: Python script that can be used to load multiple sav files
+date: 13-05-2024
 author: Lisette de Schipper
 
 If you're going to do a lot of processing with a lot of data, consider 
@@ -28,12 +28,16 @@ def dask_process_single_file(filepath):
     return df
 
 if __name__ == '__main__':
+    # Two methods are shown below. Pick your poison.
+
+    # METHOD 1
     # Just loading in data with minimal processing
     pool = Pool(4) #or whatever number of threads you want to use
     filepaths = [r"../dummy_data/simpledummyset.sav", r"../dummy_data/simpledummyset2.sav"]
     dfs = pool.map(process_single_file, filepaths)
     ## Now, dfs contains a list of DataFrames
 
+    # METHOD 2
     # example with dask:
     dfs = [delayed(dask_process_single_file)(file) for file in filepaths]
     ddfs = dd.from_delayed(dfs)
