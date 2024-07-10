@@ -1,0 +1,76 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+First, let's get the residents of the municipality The Hague in the year 2006. 
+
+```{r}
+year <- 2016
+municipality <- "0518"
+
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+source("cbs_get_residents.R")
+
+res <- get_residents(year, municipality)
+```
+
+Now, let's get their household income and personal income. We designed the functions in such a way that
+dirs and filters can be overwritten, so make sure not to source two functions right after each other!
+
+```{r}
+source("cbs_get_household_income.R")
+household_income <- get_household_income(year)
+
+source("cbs_get_personal_income.R")
+personal_income <- get_personal_income(year)
+```
+
+Let's combine these data tables
+```{r}
+data <- merge(res, personal_income, by = c("RINPERSOONS", "RINPERSOON"), all.x = TRUE)
+
+#by passing the argument all.x = TRUE, we will keep people who are not associated with a household.
+data <- merge(data, household_income, by = c("RINPERSOONSHKW", "RINPERSOONHKW"), all.x = TRUE)
+```
+
+Optionally, we can save the created dataset as a parquet file and read that in for future reference. This wil save you a lot of time, since you don't have to wait for each of the previous function to run.
+```{r}
+filename <- "my_amazing_dataset.parquet"
+arrow::write_parquet(data, filename)
+# rm(res)
+# rm(household_income)
+# rm(personal_income)
+
+```
+Uncomment the next code chunk if you want to read in the dataset
+
+```{r}
+# data <- setDT(arrow::read_parquet(filename))
+```
+
+Next, let's just get the primary cause of death for our residents
+```{r}
+source("cbs_get_prim_cause_of_death.R")
+death <- get_prim_cause_of_death(year)
+#we don't really care about the year column
+death <- death[, 1:3]
+```
+
+Let's combine these data tables. Keep in mind that most people will be alive, so keep the all.x = TRUE in tact!
+```{r}
+data <- merge(data, death, by = c("RINPERSOONS", "RINPERSOON"), all.x = TRUE)
+```
+
+Things should be rather straight forward from now! Next up: medication usage, but now I want to have the data for 2014, 2015 and 2016
+```{r}
+source("cbs_get_med.R")
+med <- get_med(c(2014, 2015, 2016))
+# let's rename the year column
+setnames(med, "year", "medyear")
+```
+
+Let's combine these data tables. Keep in mind that most people will be alive, so keep the all.x = TRUE in tact!
+```{r}
+data <- merge(data, med, by = c("RINPERSOONS", "RINPERSOON"), all.x = TRUE)
+```

@@ -19,8 +19,8 @@ library(haven)
 
 dirs <- c(r"(G:\GezondheidWelzijn\DO)", r"(G:\GezondheidWelzijn\DOODOORZTAB)")
 
-filters <- list("rinpersoons" = c("Srtnum", "RINPERSOONS", "srtnum", "rinpersoons"),
-                "rinpersoon" = c("RIN", "RINPERSOON", "rin", "rinpersoon"),
+filters <- list("RINPERSOONS" = c("Srtnum", "RINPERSOONS", "srtnum", "rinpersoons"),
+                "RINPERSOON" = c("RIN", "RINPERSOON", "rin", "rinpersoon"),
                 "uccode" = c("PRIMOORZ", "primoorz", "UCCODE"))
 
 get_prim_cause_of_death <- function(my_years){
@@ -52,7 +52,7 @@ get_prim_cause_of_death <- function(my_years){
     data[, year := year]
 
     # type conversion
-    data[, rinpersoon := sprintf("%009d", as.numeric(rinpersoon))]
+    data[, RINPERSOON := sprintf("%009d", as.numeric(RINPERSOON))]
 
     return(data)
   }

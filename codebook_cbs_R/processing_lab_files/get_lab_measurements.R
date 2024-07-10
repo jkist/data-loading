@@ -17,6 +17,7 @@
 
 library(data.table)
 library(furrr)
+library(data.table)
 
 sel_dWCIAnum <- c(35, seq(40, 43), 77, seq(134, 136), 181, 192, 227, 357, 359,
                   369, 371, 372, 381, 382, 412, 415, 446, 513, 523, 534, 542,
@@ -46,7 +47,7 @@ get_lab_measurements <- function(selection = sel_dWCIAnum){
   
   plan(multisession, workers = availableCores())
   
-  data <- future_map_dfr(files, load_lab, .options= furrr_options(packages = "data.table"))
+  data <- future_map_dfr(files, load_lab)
   
   data <- unique(data)
   

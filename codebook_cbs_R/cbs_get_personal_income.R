@@ -1,15 +1,15 @@
-#' This function will get you the household income per household
+#' This function will allow you to link RINPERSONEN (RINPEOPLE) with RINPERSOONHKW
 #' 
-#' Date: 28-06-2024
+#' Date: 09-07-2024
 #' @author Janet Kist
 #' @author Lisette de Schipper
 #' @param my_years of interest (optional) to get the household income for 
 #' (empty, int, or a vector of ints)
 #' @returns a dataframe
 #' @examples
-#' get_household_income(seq(1995, 2023))
-#' get_household_income(2012)
-#' get_household_income()
+#' get_personal_income(seq(1995, 2023))
+#' get_personal_income(2012)
+#' get_personal_income()
 
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 source("cbs_get_latest_sav_files.R")
@@ -17,13 +17,14 @@ library(furrr)
 library(data.table)
 library(haven)
 
-dirs <- c(r"(G:\InkomenBestedingen\INTEGRAAL HUISHOUDENS INKOMEN)", r"(G:\InkomenBestedingen\INHATAB)")
+dirs <- c(r"(G:\InkomenBestedingen\INTEGRAAL PERSOONLIJK INKOMEN)", r"(G:\InkomenBestedingen\INPATAB)")
 
-filters <- list("RINPERSOONSHKW" = c("RINPERSOONSKERN", "RINPERSOONSHKW"),
-                "RINPERSOONHKW" = c("RINPERSOONKERN", "RINPERSOONHKW"),
-                "INHP100HGEST" = c("BVRPERCGESTINKH", "INHP100HGEST"))
+filters <- list("RINPERSOONS" = "RINPERSOONS",
+                "RINPERSOON" = "RINPERSOON",
+                "RINPERSOONSHKW" = c("RINPERSOONSKERN", "RINPERSOONSHKW"),
+                "RINPERSOONHKW" = c("RINPERSOONKERN", "RINPERSOONHKW"))
 
-get_household_income <- function(my_years){
+get_personal_income <- function(my_years){
   files <- get_latest_sav_files(dirs, "KOPPELPERSOON")
   
   #In case the user needs a subset of years
@@ -44,14 +45,9 @@ get_household_income <- function(my_years){
     
     data[, year := year]
     
-    # type conversion
-    data[, INHP100HGEST := as.numeric(INHP100HGEST)]
-    
     return(data)
   }
-  
   plan(multisession, workers = availableCores())
   data <- future_map2_dfr(files$file, files$year, read_sav)
   return(data)
 }
-

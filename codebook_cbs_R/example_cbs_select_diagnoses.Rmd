@@ -6,7 +6,7 @@ date: 26-06-2024
 description: an example on how to efficiently select diagnoses.
 ---
 
-Hopefully, in your project, someone has ran the cbs_get_diagnoses() function to convert all those files to parquet files. If not, run it yourself :)! 
+Hopefully, in your project, someone has ran the cbs_save_diagnoses_to_parquet() function to convert all those files to parquet files. If not, run it yourself :)! 
 
 The steps are simple:
 1. make a selection on the codelist provided by CBS
