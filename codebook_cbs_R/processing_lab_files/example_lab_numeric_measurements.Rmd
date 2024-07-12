@@ -1,0 +1,38 @@
+---
+title: "example numeric LAB measurements"
+output: html_notebook
+authors: Lisette de Schipper
+date: 28-06-2024
+description: an example on how to get numeric LAB measurements (including BMI)
+---
+Definitely look at the functions themselves, and feel free to improve them
+or customise them to your needs
+
+```{r}
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+
+source("get_lab_measurements.R") # to get the data from the lab files
+source("get_numeric_lab_measurements.R") #to select conditions and clean them up
+source("get_numeric_BMI.R") # to get BMI measurements
+
+```
+
+```{r}
+data <- get_lab_measurements()
+print(nrow(data))
+head(data)
+```
+
+
+```{r}
+ldlCholesterol <- get_numeric_lab_measurements(data, "ldlCholesterol", c(542, 2683))
+print(nrow(ldlCholesterol))
+head(ldlCholesterol)
+```
+
+```{r}
+bmi <- get_numeric_bmi(data, 10)
+print(nrow(bmi))
+head(bmi)
+```
+
