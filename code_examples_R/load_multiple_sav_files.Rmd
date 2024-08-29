@@ -6,10 +6,18 @@ author: "Lisette de Schipper"
 output: html_notebook
 ---
 
-NOTE: You do NOT need to include the library every time you use a function from that library. This is done for each code chunk just so that it it is easy for you to copy everything you need.
+NOTE: You do NOT need to include the library every time you use a function from
+that library. This is done for each code chunk just so that it it is easy for you to 
+copy everything you need.
 
-If you want to read in multiple BIGGER files, then you should consider parallelising this. There are several packages that allow for parallelism. in our ad hoc testing we found the furrr package to be one of the quickest ones.
+If you want to read in multiple BIGGER files, then you should consider 
+parallelising this. There are several packages that allow for parallelism. 
+In our ad hoc testing we found the furrr package to be one of the quickest ones.
 
+Note that a lot of researchers opt to use dplyr and/or datatables. Both are
+great and they are considerably faster than R's native dataframes.
+
+# 1. Simple: with concatenation
 The following chunk automatically concatenates all dataframes together.
 ```{r}
 library(foreign)
@@ -23,8 +31,9 @@ plan(multisession, workers = availableCores())
 df <- future_map_dfr(files, read.spss, to.data.frame = TRUE, use.value.labels = FALSE)
 df
 ```
-You may not actually want to concatenate all dataframes. If so:
 
+# 2. Simple: without concatenation
+You may not actually want to concatenate all dataframes.
 ```{r}
 library(foreign)
 library(furrr)
@@ -40,22 +49,24 @@ dfs
 is.data.frame(dfs[[1]])
 ```
 
-You could also do some preprocessing while the functions are running in parallel (see below). Note that you can also use the function future_pmap if you do not want to concatenate all dataframes.
+
+# 3. Simple: without concatenation and some preprocessing
+You could also do some preprocessing while the functions are running in parallel (see below). Note that you can also use the function future_pmap if you do not want to concatenate all dataframes. This looks rather clunky, and code snippet 4 could be easily adapted to achieve the same.
 
 ```{r}
 library(foreign)
-library(furrr)
+library(haven)
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-files <- c(r"(dummy_data/simpledummyset.sav)",
-           r"(dummy_data/simpledummyset2.sav)")
+files <- c(r"(../dummy_data/simpledummyset.sav)",
+           r"(../dummy_data/simpledummyset2.sav)")
 
 years <- list(2021, 2022)
 
 columns <- list(c("column1", "column2"), c("column1", "column3"))
 
 process_sav_file <- function(file, year, columns){
-  file <- read.spss(file, to.data.frame = TRUE, use.value.labels = FALSE)
-  file <- file[columns] #select columns
+  file <- read_spss(file, col_select = columns)
+  file <- zap_formats(zap_labels(file))
   file["year"] = year #add column
   return (file)
 }
@@ -71,8 +82,8 @@ One possible alternative to parallelisation is the DoFuture package, which is on
 library(foreign)
 library(doFuture)
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-files <- c(r"(dummy_data/simpledummyset.sav)",
-           r"(dummy_data/simpledummyset2.sav)")
+files <- c(r"(../dummy_data/simpledummyset.sav)",
+           r"(../dummy_data/simpledummyset2.sav)")
 
 plan(multisession, workers = availableCores())
 
@@ -85,13 +96,45 @@ dfs
 is.data.frame(dfs[[1]])
 ```
 
-If you want to read smaller files, you should do so sequentially, since parallellisation does create some overhead:
 
+#4 Elegant parallel read
+Below may be harder to understand, but it is very convenient if you want to load
+a lot of data sets, and also want to define additional things per data set.
+It's not as clunky as
+It loads the R script helper_mulitple_sav_files.R. Take a look there, and feel
+free to make adaptations!
+
+```{r}
+library(furrr)
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+
+# Loading the R script that's also in this directory.
+source("helper_multiple_sav_files.R")
+
+# You can get very creative with the cols argument here!
+files <- c(
+  "2021" = new("File",
+               location = r"(../dummy_data/simpledummyset.sav)",
+               cols = c("column1", "column2")),
+  "2022" = new("File",
+               location = r"(../dummy_data/simpledummyset2.sav)",
+               cols = substitute(c(any_of(c("column1", "columnIdon'texist")), ends_with("3"))))
+)
+
+plan(multisession, workers = availableCores())
+
+dfs <- setNames(future_map(files, custom_read_sav), names(files))
+
+dfs
+```
+
+If you want to read smaller files, you should do so sequentially, since parallellisation does create some overhead:
+# 5. Sequential: for smaller files
 ```{r}
 library(foreign)
 
-files <- c(r"(dummy_data/simpledummyset.sav)",
-           r"(dummy_data/simpledummyset2.sav)")
+files <- c(r"(../dummy_data/simpledummyset.sav)",
+           r"(../dummy_data/simpledummyset2.sav)")
 
 dfs <- lapply(files, read.spss, to.data.frame = TRUE, use.value.labels = FALSE)
 

@@ -1,3 +1,7 @@
+#' !!!!!!!!!!!!!!!!!!!!!
+#' !!!! DEPRECIATED !!!!
+#' !!!!!!!!!!!!!!!!!!!!!
+#' 
 #' Function that presents a standardised way to get BMIS, both coded as
 #' BMI and BMI calculated from height and weight
 #'  
