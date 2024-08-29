@@ -35,7 +35,7 @@ The project column contains the projects that can use this function. This was no
 | load_single_sav_file.Rmd | Example of reading in a single sav file |
 | load_multiple_sav_files.Rmd | Examples of reading in multiple sav files. |
 | get_sav_files_from_dir.Rmd | Example of getting the paths of all sav files nested in a dir. |
-| loading_saving_parquet_dir.Rmd | Use this example to increase your load time. |
+| loading_saving_parquet_dir.Rmd | Use this example to decrease your load time. |
  get_newest_sav_from_dir.Rmd | An example on how to get the latest sav file form a directory. |
 
 
