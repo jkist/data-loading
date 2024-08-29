@@ -101,7 +101,7 @@ is.data.frame(dfs[[1]])
 Below may be harder to understand, but it is very convenient if you want to load
 a lot of data sets, and also want to define additional things per data set.
 It's not as clunky as
-It loads the R script helper_mulitple_sav_files.R. Take a look there, and feel
+It loads the R script function_mulitple_sav_files.R. Take a look there, and feel
 free to make adaptations!
 
 ```{r}
@@ -109,7 +109,7 @@ library(furrr)
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 # Loading the R script that's also in this directory.
-source("helper_multiple_sav_files.R")
+source("function_multiple_sav_files.R")
 
 # You can get very creative with the cols argument here!
 files <- c(
