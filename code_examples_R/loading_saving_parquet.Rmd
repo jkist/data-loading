@@ -9,9 +9,10 @@ output: html_notebook
 Writing data to parquet
 ```{r}
 library(arrow)
-library(foreign)
+library(haven)
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-df <- read.spss(r"(../dummy_data/simpledummyset.sav)", to.data.frame = TRUE, use.value.labels = FALSE)
+df <- read_spss(r"(../dummy_data/simpledummyset.sav)")
+df <- zap_formats(zap_labels(df))
 write_parquet(df, r"(../dummy_data/converted_simpledummyset.parquet)")
 ```
 

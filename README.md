@@ -24,7 +24,7 @@ The project column contains the projects that can use this function. This was no
 | get_latest_sav_file.R | Get the latest sav file from a folder | all |
 | processing_lab_files/get_lab_measurements.R | file that converts that gets data from LAB files (RDS) based on certain dWCIAnumbers | 9002 |
 | processing_lab_files/get_numeric_lab_measurements.R | File that cleans up the data for a given dWCIAnumber and converts them to numeric. Do adapt this to your needs. | 9002 |
-| processing_lab_files/get_numeric_bmi.R | A method of retrieving the BMI from the data that also calculates it from available data on height and weight | 9002 |
+| processing_lab_files/get_numeric_bmi.R | DEORECIATED. A method of retrieving the BMI from the data that also calculates it from available data on height and weight | 9002 |
 | processing_lab_files/example_lab_numeric_measurements.RMD | an example on how to get numeric lab measurements. This uses get_lab_measurements.R and get_numeric_bmi.R | 9002 |
 | processing_lab_files/lab_date_cleanup.R | Function that gets the actual starting and ending date for the patient population in the GP data | 9002 | 
 
@@ -36,7 +36,8 @@ The project column contains the projects that can use this function. This was no
 | load_multiple_sav_files.Rmd | Examples of reading in multiple sav files. |
 | get_sav_files_from_dir.Rmd | Example of getting the paths of all sav files nested in a dir. |
 | loading_saving_parquet_dir.Rmd | Use this example to decrease your load time. |
- get_newest_sav_from_dir.Rmd | An example on how to get the latest sav file form a directory. |
+| get_newest_sav_from_dir.Rmd | An example on how to get the latest sav file from a directory. |
+| helper_multiple_sav_files.R | Function that can be used to simplify reading in sav files in parallel. |
 
 
 ## Reading dirty csv files
