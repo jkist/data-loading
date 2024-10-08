@@ -1,16 +1,20 @@
-#' This file generates a specific starting and ending date for all patients in
-#' the patient file,action file and the icpc file. It also generates a starting
-#' and ending date based on all three files. It also calculates the number of 
+#' This file generates a specific starting and ending date for the registration at the GP practice for all patients from
+#' the patient file and action file. 
+# It also combines the starting
+#' and ending date based on the two files. It also calculates the number of follow up
 #' days between the start and end of each generated date
 #' 
 #' NOTE
 #' This file swaps every ending and start date of the generalised date under
-#' the assumption that was an accident at the practice.
+#' the assumption that was an accident at the practice. For example, not all 
+#' practice systems work with an "inschrijf datum" or "uitschrijfdatum", or
+#' when a patient switches practices in certain systems the "uitschrijfdatum" 
+#' becomes an older date than the new "inschrijfdatum" which generates false negative follow up time/days
 #' 
 #' This file is broadly based on ELAN Preprocess files to proxy start and proxy stop dates,
 #' but does not result in the same output. Customise this as you see fit :).
 #'  
-#' Date: 26-6-2024
+#' Date: 8-10-2024
 #' Author: Janet Kist
 
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
@@ -19,11 +23,12 @@ library(future)
  
 patfile<-r"(H:/data/raw/ELAN/ELAN/original_rds_files_2023/23_elan_pat.rds)"
 actfile <- r"(H:/data/raw/ELAN/ELAN/original_rds_files_2023/23_elan_act.rds)"
-icpcfile <- r"(H:/data/raw/ELAN/ELAN/original_rds_files_2023/23_elan_icpc.rds)"
+
 
 uploaddate <- "2023-05-01"
 icpcdate <- "2000-01-01"
 
+#'define as a date 
 enddate <- as.Date(uploaddate, format = "%Y-%m-%d")
 startdate <- as.Date("1990-01-01", format = "%Y-%m-%d")
 
@@ -50,38 +55,26 @@ actfile_process <- function(actfile){
   return(actfile)
 }
 
-icpcfile_process <- function(icpcfile){
-  icpcfile <- setDT(readRDS(icpcfile))
-  icpcfile[icpc_datum > icpcdate, ':=' (icpc_start = min(icpc_datum),
-                                        icpc_end = max(icpc_datum)),
-           by = c("RINPERSOONS", "RINPERSOON")]
-  icpcfile <- icpcfile[(RINPERSOON != "000000000") & !is.na(RINPERSOON)]
-  icpcfile <- icpcfile[, c("RINPERSOONS", "RINPERSOON", "icpc_start", "icpc_end")]
-  icpcfile <- unique(icpcfile)
-  icpcfile[icpc_start > icpc_end, ':='(icpc_start = icpc_end, icpc_end = icpc_start)]
-  return(icpcfile)
-}
 
 #Let's execute these functions in parallel and just get them from the environment
 
 plan(multisession)
 job_pat %<-% patfile_process(patfile)
 job_act %<-% actfile_process(actfile)
-job_icpc %<-% icpcfile_process(icpcfile)
 
 data <- lapply(ls(pattern="job_"), get)
 
 # custom merge function that should be native to the data.table lib
 themerge <- function(x,y){
-  return (merge(x, y, by=c("RINPERSOONS", "RINPERSOON"), all = TRUE))
+  return (merge(x, y, by=c("RINPERSOONS", "RINPERSOON"), all = TRUE)) # change to PatientID and OrganisatieID when working with ELAN GP in LUMC environment
 }
 
 file <- Reduce(themerge, data)
 
-# Create a start an end variable that takes pat, act and icpc in account
+# Create a start an end variable that takes pat and act in account
 # It just takes the lowest value of the three start attributes
-file[, reg_start := pmin(patient_start, act_start, icpc_start, na.rm = TRUE)]
-file[, reg_end := pmax(patient_end, act_end, icpc_end, na.rm = TRUE)]
+file[, reg_start := pmin(patient_start, act_start, na.rm = TRUE)]
+file[, reg_end := pmax(patient_end, act_end, na.rm = TRUE)]
 
 # Remove people who do not have a duration
 file <- file[!(is.na(reg_start) | is.na(reg_end))]
