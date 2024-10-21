@@ -1,3 +1,16 @@
+#' Combine dates for the corrected registration dates at the practice
+#' Not all GP practices use "Inschrijfdatum" and "uitschrijfdatum", and the
+#' theoretical next best is "inschrijftarief" from act file, but these 2 
+#' combined do not for example capture expats, who can have a foreign health insurance.
+
+#' So for the registration dates of a patient a combination of dates is advised: 
+#' 1. Pat file: inschrijftarief and uitschrijftarief 
+#' 2. Act file: all dates
+#' 3. Episode & Journal: all ICPC dates
+#' 4. than remove individuals with for example < half a year difference between 
+#' start reg_date and end date reg_date and do a check of individuals only visited
+#' the practice less than once per year/2 years
+#'
 #' This file generates a specific starting and ending date for all patients in
 #' the patient file,action file and the icpc file. It also generates a starting
 #' and ending date based on all three files. It also calculates the number of 
@@ -12,6 +25,7 @@
 #'  
 #' Date: 26-6-2024
 #' Author: Janet Kist
+#' updated: 21-10-2024
 
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 library(data.table)
